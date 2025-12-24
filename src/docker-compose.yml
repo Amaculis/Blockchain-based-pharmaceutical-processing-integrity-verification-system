@@ -1,15 +1,37 @@
 version: '3.9'
 
 services:
-  postgres:
-    image: postgres:15
-    container_name: auditchain-db
-    restart: always
+  #Backend
+  api:
+    image: ${DOCKER_REGISTRY-}api
+    container_name: api
+    build:
+      context: ./backend/api
+      dockerfile: ./PharmaBlockchainBackend.Api/Dockerfile
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    depends_on:
+      infrastructure:
+        condition: service_healthy
+    environment:
+      AppSettings__uiUrl: http://localhost:5173
+      ASPNETCORE_ENVIRONMENT: Development
+
+  #Databases
+  infrastructure:
+    image: postgres:latest
+    container_name: timehacker.infrastructure
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: auditdb
+      POSTGRES_DB: apiDb
+    volumes:
+      - ./.containers/db:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-    volumes:
-      - ./db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
