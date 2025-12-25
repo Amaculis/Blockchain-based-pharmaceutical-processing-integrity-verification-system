@@ -4,10 +4,14 @@ using PharmaBlockchainBackend.Infrastructure.Entities;
 
 namespace PharmaBlockchainBackend.Api.Features.ProtocolActions.StepSubmit
 {
-    public class Handler(IRepository<ProtocolStep> protocolStepRepository, IRepository<Package> packageRepository, IRepository<Pallet> palletRepository)
+    public class Handler(IRepository<ProtocolStep> protocolStepRepository, IRepository<Package> packageRepository, IRepository<Pallet> palletRepository, IRepository<Cmo> cmoRepository)
     {
         public async Task Handle(Request request, CancellationToken ct)
         {
+            var cmoExists = await cmoRepository.DbSet.AnyAsync(c => c.Id == request.CmoId, ct);
+            if (!cmoExists)
+                throw new InvalidOperationException($"CMO with Id {request.CmoId} does not exist.");
+
             request = request with { PackageCodes = [.. request.PackageCodes.Distinct()] };
 
             List<(Guid packageCode, byte[] hash)> packageHashes = [];
