@@ -1,4 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
+using PharmaBlockchainBackend.Infrastructure.Entities;
 
 namespace PharmaBlockchainBackend.Infrastructure
 {
@@ -6,7 +9,10 @@ namespace PharmaBlockchainBackend.Infrastructure
     {
         #region DbSets
 
-
+        internal DbSet<Cmo> Cmo { get; set; }
+        internal DbSet<Pallet> Pallet { get; set; }
+        internal DbSet<Package> Package { get; set; }
+        internal DbSet<ProtocolStep> ProtocolStep { get; set; }
 
         #endregion
 
@@ -27,4 +33,14 @@ namespace PharmaBlockchainBackend.Infrastructure
                 db.Migrate();
         }
     }
+
+    public class MigrationsDbContextFactory : IDesignTimeDbContextFactory<PharmaBlockchainBackendDbContext>
+    {
+        public PharmaBlockchainBackendDbContext CreateDbContext(string[] args)
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<PharmaBlockchainBackendDbContext>().UseNpgsql();
+            return new PharmaBlockchainBackendDbContext(optionsBuilder.Options);
+        }
+    }
+
 }

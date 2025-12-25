@@ -10,8 +10,9 @@ namespace PharmaBlockchainBackend.Infrastructure.Entities
         public Guid CmoId { get; set; }
         public virtual Cmo Cmo { get; set; } = null!;
 
-        public ProtocolType StepName { get; set; }
+        public ProtocolType ProtocolType { get; set; }
         public int StepNumber { get; set; }
+
         public Guid PalletId { get; set; }
         public virtual Pallet Pallet { get; set; } = null!;
 

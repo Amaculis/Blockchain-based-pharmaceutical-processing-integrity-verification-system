@@ -2,5 +2,6 @@
 {
     public enum ProtocolType
     {
+        None = 0,
     }
 }
