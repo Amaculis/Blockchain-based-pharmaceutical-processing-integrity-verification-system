@@ -17,4 +17,9 @@ export default {
     artifacts: "./src/backend/blockchain/artifacts",
     cache: "./src/backend/blockchain/cache"
   },
+  networks: {
+    localhost: {
+      url: "http://127.0.0.1:8545"
+    }
+  }
 };
