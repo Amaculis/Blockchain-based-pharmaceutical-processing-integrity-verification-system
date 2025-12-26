@@ -65,17 +65,48 @@ docker ps
 # Start blockchain (local at the moment)
 npx hardhat node
 
+#There you will get 20 accounts with privete keys and 10000 eth for tests. 
+
 # contract deploy
-npx hardhat run scripts/deploy.js --network localhost
+npx hardhat run src\backend\blockchain\scripts\deploy.js --network localhost
+# After that you wll see output of contract address, save it or put into script
 
 #lauch backend server
 node backend/server.js
 
 # Optional test audit
-npx hardhat run scripts/addAudit.js --network localhost
+npx hardhat run src\backend\blockchain\scripts/addAudit.js --network localhost
 
-#Stop database
+#Stop docker
 docker-compose down
 ```
 
     
+
+## Useful thing for blockchain develop and testing
+ ```bash
+
+# To recompile contracts launch this
+npx hardhat clean
+npx hardhat compile
+
+# To see list of compiled contracts type use
+ls artifacts/contracts
+
+# For local tests, it is possible to use test script testHash.js
+# For tests launch:
+
+npx hardhat run src\backend\blockchain\scripts\testHash.js  --network localhost
+
+# Excepted output:
+
+Testing with account: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+Writing hash: 0x443613b999b49f9db991692ee29b05d0a1350f42ac21168f48113731058d9204
+Timestamp: 1766759616
+Read hash: 0x443613b999b49f9db991692ee29b05d0a1350f42ac21168f48113731058d9204
+Integrity check: OK
+
+#Otherwise in output will be error description
+
+ ```
+
