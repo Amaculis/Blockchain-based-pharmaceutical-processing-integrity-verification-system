@@ -46,3 +46,18 @@ services:
       - ./.containers/pgadmin:/var/lib/pgadmin
     depends_on:
       - pharma.infrastructure
+
+  #Hardhat blockchain node 
+  pharma.blockchain:
+    image: node:20-alpine
+    container_name: pharma.blockchain
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: >
+      sh -c "npm install && npx hardhat node &
+         sleep 5 &&
+         npx hardhat run src/backend/blockchain/scripts/deploy.js --network localhost &&
+         tail -f /dev/null"
+    ports:
+      - "8545:8545"

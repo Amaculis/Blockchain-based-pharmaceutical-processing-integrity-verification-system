@@ -10,7 +10,7 @@ export async function initDB() {
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
   `);
-  console.log("✅ PostgreSQL table ready");
+  console.log(" PostgreSQL table ready");
 }
 
 export async function saveAudit(batchId, hashData, cmoAddress) {
@@ -18,5 +18,5 @@ export async function saveAudit(batchId, hashData, cmoAddress) {
     'INSERT INTO audits (batch_id, hash_data, cmo_address) VALUES ($1, $2, $3) ON CONFLICT DO NOTHING',
     [batchId, hashData, cmoAddress]
   );
-  console.log(`💾 Audit saved: ${batchId}`);
+  console.log(` Audit saved: ${batchId}`);
 }
