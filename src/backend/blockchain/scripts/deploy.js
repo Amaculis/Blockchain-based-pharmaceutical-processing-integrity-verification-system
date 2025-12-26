@@ -1,12 +1,13 @@
+import pkg from "hardhat";
+const { ethers } = pkg;
+
 async function main() {
-    const AuditRegistry = await ethers.getContractFactory("AuditRegistry");
-    const auditRegistry = await AuditRegistry.deploy();
-    await auditRegistry.deployed();
-    console.log(" Contract deployed to:", auditRegistry.address);
-  }
-  
-  main().catch((error) => {
-    console.error(error);
-    process.exitCode = 1;
-  });
-  
+  const ContractName = "AuditRegistry";
+  const Contract = await ethers.getContractFactory(ContractName);
+  const contract = await Contract.deploy();
+  await contract.waitForDeployment();
+
+  console.log(ContractName & " deployed to:", await contract.getAddress());
+}
+
+main().catch(console.error);
