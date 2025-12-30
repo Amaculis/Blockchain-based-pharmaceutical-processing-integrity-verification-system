@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PharmaBlockchainBackend.Domain.Helpers;
 using PharmaBlockchainBackend.Infrastructure;
 using PharmaBlockchainBackend.Infrastructure.Entities;
 
@@ -17,7 +18,7 @@ namespace PharmaBlockchainBackend.Api.Features.ProtocolActions.StepSubmit
             List<(Guid packageCode, byte[] hash)> packageHashes = [];
             foreach (var packageCode in request.PackageCodes)
             {
-                var hash = CalculateHash(request);
+                var hash = HashHelpers.CalculateHash(request.ProtocolType, request.StepNumber, packageCode, request.AdditionalData);
                 packageHashes.Add((packageCode, hash));
             }
 
@@ -91,20 +92,6 @@ namespace PharmaBlockchainBackend.Api.Features.ProtocolActions.StepSubmit
             }
 
             await protocolStepRepository.DbContext.SaveChangesAsync(ct);
-        }
-
-        private static byte[] CalculateHash(Request request)
-        {
-            var additionalDataString = request.AdditionalData is null
-                ? string.Empty
-                : System.Text.Json.JsonSerializer.Serialize(request.AdditionalData);
-
-            var packageCodesString = string.Join(",", request.PackageCodes.Order());
-
-            var rawData = $"{request.ProtocolType}|{request.StepNumber}|{additionalDataString}|{packageCodesString}";
-            var bytes = System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(rawData));
-
-            return bytes;
         }
     }
 }
