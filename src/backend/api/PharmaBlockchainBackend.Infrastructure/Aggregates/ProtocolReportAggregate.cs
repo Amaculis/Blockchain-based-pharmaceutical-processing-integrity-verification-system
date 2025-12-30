@@ -5,7 +5,7 @@ namespace PharmaBlockchainBackend.Infrastructure.Aggregates
 {
     public record ProtocolReportAggregate
     {
-        public Guid LatestStepId { get; init; }
+        public DateTime LatestTimestamp { get; init; }
 
         public required Guid CmoId { get; init; }
         public required string CmoName { get; init; }
@@ -32,7 +32,7 @@ namespace PharmaBlockchainBackend.Infrastructure.Aggregates
             Query = query.GroupBy(x => new { x.ProtocolType, x.PalletId })
                 .Select(g => new ProtocolReportAggregate
                 {
-                    LatestStepId = g.OrderByDescending(ps => ps.Id).First().Id,
+                    LatestTimestamp = g.OrderByDescending(ps => ps.Timestamp).First().Timestamp,
                     CmoId = g.First().CmoId,
                     CmoName = g.First().Cmo.Name,
                     ProtocolType = g.Key.ProtocolType,

@@ -19,7 +19,7 @@ namespace PharmaBlockchainBackend.Api.Features.ProtocolActions.List
                 query = query.Where(ps => ps.PackageCodes.Contains(request.PackageCode.Value));
 
             return query
-                .OrderByDescending(p => p.LatestStepId)
+                .OrderByDescending(p => p.LatestTimestamp)
                 .Skip(request.Skip)
                 .Take(request.Top)
                 .AsAsyncEnumerable()

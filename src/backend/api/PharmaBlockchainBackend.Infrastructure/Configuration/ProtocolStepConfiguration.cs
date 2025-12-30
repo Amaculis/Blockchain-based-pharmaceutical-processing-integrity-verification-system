@@ -21,6 +21,8 @@ namespace PharmaBlockchainBackend.Infrastructure.Configuration
             builder.HasIndex(x => new { x.CmoId, x.ProtocolType });
             builder.HasIndex(x => new { x.ProtocolType, x.PalletId });
 
+            builder.HasIndex(x => x.Timestamp).IsDescending(true);
+
             builder.HasOne(x => x.Cmo)
                    .WithMany(p => p.ProtocolSteps)
                    .HasForeignKey(x => x.CmoId)

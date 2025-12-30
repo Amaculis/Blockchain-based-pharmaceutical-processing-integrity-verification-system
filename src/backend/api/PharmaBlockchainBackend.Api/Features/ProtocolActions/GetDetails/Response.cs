@@ -20,6 +20,7 @@ namespace PharmaBlockchainBackend.Api.Features.ProtocolActions.GetDetails
 
     public record StepResponse
     {
+        public required DateTime Timestamp { get; init; }
         public required int StepNumber { get; init; }
         public object? AdditionalData { get; init; }
     }

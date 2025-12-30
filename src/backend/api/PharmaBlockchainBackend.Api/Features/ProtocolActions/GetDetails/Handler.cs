@@ -20,7 +20,8 @@ namespace PharmaBlockchainBackend.Api.Features.ProtocolActions.GetDetails
                     Steps = [.. g.Select(step => new StepResponse
                     {
                         StepNumber = step.StepNumber,
-                        AdditionalData = step.AdditionalData
+                        AdditionalData = step.AdditionalData,
+                        Timestamp = step.Timestamp
                     })]
                 });
 
