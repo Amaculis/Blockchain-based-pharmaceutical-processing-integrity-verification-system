@@ -6,6 +6,7 @@ namespace PharmaBlockchainBackend.Api.Features.ProtocolActions.List
     public record Response
     {
         public required Guid CmoId { get; init; }
+        public required string CmoName { get; init; }
         public required ProtocolType ProtocolType { get; init; }
         public required int StepsSubmitted { get; init; }
         public required int PossibleProtocolSteps { get; init; }
@@ -17,6 +18,7 @@ namespace PharmaBlockchainBackend.Api.Features.ProtocolActions.List
             return new Response
             {
                 CmoId = aggregate.CmoId,
+                CmoName = aggregate.CmoName,
                 ProtocolType = aggregate.ProtocolType,
                 StepsSubmitted = aggregate.StepsSubmitted,
                 PossibleProtocolSteps = aggregate.PossibleProtocolSteps,

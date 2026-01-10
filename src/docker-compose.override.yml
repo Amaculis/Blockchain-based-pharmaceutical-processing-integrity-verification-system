@@ -1,4 +1,20 @@
 services:
+  #Frontend (override)
+  pharma.frontend:
+    working_dir: /app
+    build:
+      context: ./frontend
+      dockerfile: ../build/frontend/Dockerfile.local
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - CHOKIDAR_INTERVAL=100
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+
+  #Backend (override)
   pharma.api:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
@@ -20,4 +36,3 @@ services:
     depends_on:
       pharma.blockchain:
         condition: service_started
-     
