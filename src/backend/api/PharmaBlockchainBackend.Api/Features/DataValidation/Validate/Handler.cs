@@ -35,7 +35,7 @@ namespace PharmaBlockchainBackend.Api.Features.DataValidation.Validate
                     foreach (var blockHash in blockchainHashes)
                     {
                         var expectedHash = blockHash;
-                        var expectedT    imestamp = packageStep.Timestamp; //TODO Guess we dont need that
+                        var expectedTimestamp = packageStep.Timestamp; //TODO Guess we dont need that
 
                         if (packageStep.Timestamp != expectedTimestamp || !expectedHash.SequenceEqual(actualHash))
                             invalidSteps.Add(packageStep.StepNumber);
