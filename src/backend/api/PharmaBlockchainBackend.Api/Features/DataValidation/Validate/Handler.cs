@@ -31,16 +31,24 @@ namespace PharmaBlockchainBackend.Api.Features.DataValidation.Validate
                     {
                     blockchainHashes = await _hashReader
                             .GetHashesByTimestampAsync(unixTimestamp, ct);
-                    
+
+
+                    if (blockchainHashes == null || !blockchainHashes.Any())
+                    {
+                        
+                        invalidSteps.Add(packageStep.StepNumber);
+                        continue;
+                    }
+
                     foreach (var blockHash in blockchainHashes)
                     {
                         var expectedHash = blockHash;
-                        var expectedT    imestamp = packageStep.Timestamp; //TODO Guess we dont need that
+                        var expectedTimestamp = packageStep.Timestamp; //TODO Guess we dont need that
 
                         if (packageStep.Timestamp != expectedTimestamp || !expectedHash.SequenceEqual(actualHash))
                             invalidSteps.Add(packageStep.StepNumber);
                     }
-                    }
+                     }
                     catch
                     {
                         // timestamp not found on blockchain
