@@ -1,4 +1,4 @@
-﻿﻿using PharmaBlockchainBackend.Infrastructure;
+﻿using PharmaBlockchainBackend.Infrastructure;
 using PharmaBlockchainBackend.Infrastructure.Extensions;
 using PharmaBlockchainBackend.Providers.Blockchain;
 using PharmaBlockchainBackend.Providers.Blockchain.Options;
